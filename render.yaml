@@ -35,15 +35,16 @@ services:
         fromDatabase:
           name: n8ndb
           property: user
+      - key: DB_POSTGRESDB_SCHEMA
+        value: public
 
       - key: DB_TYPE
         value: "postgresdb"
-      - key: WEB_CONCURRENCY
-        value: 4
-      - key: REDIS_URL
-        fromService:
-          name: celery-redis
-          type: redis
-          property: connectionString
-      - key: PYTHON_VERSION
-        value: 3.8.12
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: true
+      - key: N8N_BASIC_AUTH_PASSWORD
+        generated: true
+      - key: N8N_BASIC_AUTH_USER
+        value: "admin"
+
+
