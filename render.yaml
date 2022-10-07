@@ -15,6 +15,10 @@ services:
     env: docker
 
     region: ohio
+    disk:
+      name: n8n-data
+      mountPath: /home/node/.n8n
+      sizeGB: 10
     envVars:
       - key: DB_POSTGRESDB_DATABASE
         fromDatabase:
