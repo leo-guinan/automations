@@ -1,0 +1,50 @@
+databases:
+  - name: n8ndb
+    databaseName: n8ndb
+    user: n8ndb
+    region: ohio
+
+disk:
+  name: n8n-data
+  mountPath: /home/node/.n8n
+  sizeGB: 10
+
+services:
+  - type: web
+    name: n8n
+    env: docker
+
+    region: ohio
+    envVars:
+      - key: DB_POSTGRESDB_DATABASE
+        fromDatabase:
+          name: n8ndb
+          property: database
+      - key: DB_POSTGRESDB_HOST
+        fromDatabase:
+          name: n8ndb
+          property: host
+      - key: DB_POSTGRESDB_PORT
+        fromDatabase:
+          name: n8ndb
+          property: port
+      - key: DB_POSTGRESDB_PASSWORD
+        fromDatabase:
+          name: n8ndb
+          property: password
+      - key: DB_POSTGRESDB_USER
+        fromDatabase:
+          name: n8ndb
+          property: user
+
+      - key: DB_TYPE
+        value: "postgresdb"
+      - key: WEB_CONCURRENCY
+        value: 4
+      - key: REDIS_URL
+        fromService:
+          name: celery-redis
+          type: redis
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: 3.8.12
